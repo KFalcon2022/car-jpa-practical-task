@@ -1,6 +1,8 @@
-package com.walking.carpractice.model;
+package com.walking.carpractice.model.car;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarDto {
 
@@ -13,6 +15,8 @@ public class CarDto {
     private String color;
 
     private boolean actualTechnicalInspection;
+
+    private List<Long> ownerIds = new ArrayList<>();
 
     private ZonedDateTime created;
 
@@ -56,6 +60,14 @@ public class CarDto {
 
     public void setActualTechnicalInspection(boolean actualTechnicalInspection) {
         this.actualTechnicalInspection = actualTechnicalInspection;
+    }
+
+    public List<Long> getOwnerIds() {
+        return ownerIds;
+    }
+
+    public void setOwnerIds(List<Long> ownerIds) {
+        this.ownerIds = ownerIds;
     }
 
     public ZonedDateTime getCreated() {

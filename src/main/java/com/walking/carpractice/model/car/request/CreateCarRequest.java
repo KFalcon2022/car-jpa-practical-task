@@ -1,4 +1,4 @@
-package com.walking.carpractice.model.request;
+package com.walking.carpractice.model.car.request;
 
 public class CreateCarRequest {
     private String number;
@@ -8,6 +8,8 @@ public class CreateCarRequest {
     private String color;
 
     private boolean actualTechnicalInspection;
+
+    private Long modelId;
 
     public String getNumber() {
         return number;
@@ -23,5 +25,9 @@ public class CreateCarRequest {
 
     public boolean isActualTechnicalInspection() {
         return actualTechnicalInspection;
+    }
+
+    public Long getModelId() {
+        return modelId;
     }
 }

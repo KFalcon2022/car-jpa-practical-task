@@ -3,12 +3,28 @@ package com.walking.carpractice.servlet.listener;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.walking.carpractice.constant.ContextAttributeNames;
-import com.walking.carpractice.converter.CarConverter;
-import com.walking.carpractice.converter.CreateCarRequestConverter;
-import com.walking.carpractice.converter.UpdateCarRequestConverter;
+import com.walking.carpractice.converter.brand.BrandConverter;
+import com.walking.carpractice.converter.brand.CreateBrandRequestConverter;
+import com.walking.carpractice.converter.brand.UpdateBrandRequestConverter;
+import com.walking.carpractice.converter.car.CarConverter;
+import com.walking.carpractice.converter.car.CreateCarRequestConverter;
+import com.walking.carpractice.converter.car.UpdateCarRequestConverter;
+import com.walking.carpractice.converter.model.CreateModelRequestConverter;
+import com.walking.carpractice.converter.model.ModelConverter;
+import com.walking.carpractice.converter.model.UpdateModelRequestConverter;
+import com.walking.carpractice.converter.user.CreateUserRequestConverter;
+import com.walking.carpractice.converter.user.UpdateUserRequestConverter;
+import com.walking.carpractice.converter.user.UserConverter;
+import com.walking.carpractice.repository.CarRepository;
+import com.walking.carpractice.repository.ModelRepository;
+import com.walking.carpractice.repository.UserRepository;
+import com.walking.carpractice.service.BrandService;
 import com.walking.carpractice.service.CarService;
+import com.walking.carpractice.service.EncodingService;
 import com.walking.carpractice.service.EntityManagerHelper;
 import com.walking.carpractice.service.MigrationService;
+import com.walking.carpractice.service.ModelService;
+import com.walking.carpractice.service.UserService;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletContextEvent;
@@ -39,14 +55,62 @@ public class AddAttributesContextListener implements ServletContextListener {
         var updateCarRequestConverter = new UpdateCarRequestConverter();
         servletContext.setAttribute(ContextAttributeNames.UPDATE_CAR_REQUEST_CONVERTER, updateCarRequestConverter);
 
+        var brandConverter = new BrandConverter();
+        servletContext.setAttribute(ContextAttributeNames.BRAND_CONVERTER, brandConverter);
+
+        var createBrandRequestConverter = new CreateBrandRequestConverter();
+        servletContext.setAttribute(ContextAttributeNames.CREATE_BRAND_REQUEST_CONVERTER, createBrandRequestConverter);
+
+        var updateBrandRequestConverter = new UpdateBrandRequestConverter();
+        servletContext.setAttribute(ContextAttributeNames.UPDATE_BRAND_REQUEST_CONVERTER, updateBrandRequestConverter);
+
+        var modelConverter = new ModelConverter();
+        servletContext.setAttribute(ContextAttributeNames.MODEL_CONVERTER, modelConverter);
+
+        var createModelRequestConverter = new CreateModelRequestConverter();
+        servletContext.setAttribute(ContextAttributeNames.CREATE_MODEL_REQUEST_CONVERTER, createModelRequestConverter);
+
+        var updateModelRequestConverter = new UpdateModelRequestConverter();
+        servletContext.setAttribute(ContextAttributeNames.UPDATE_MODEL_REQUEST_CONVERTER, updateModelRequestConverter);
+
+        var userConverter = new UserConverter();
+        servletContext.setAttribute(ContextAttributeNames.USER_CONVERTER, userConverter);
+
+        var createUserRequestConverter = new CreateUserRequestConverter();
+        servletContext.setAttribute(ContextAttributeNames.CREATE_USER_REQUEST_CONVERTER, createUserRequestConverter);
+
+        var updateUserRequestConverter = new UpdateUserRequestConverter();
+        servletContext.setAttribute(ContextAttributeNames.UPDATE_USER_REQUEST_CONVERTER, updateUserRequestConverter);
+
         var entityManagerFactory = Persistence.createEntityManagerFactory("Hibernate");
         servletContext.setAttribute(ContextAttributeNames.ENTITY_MANAGER_FACTORY, entityManagerFactory);
 
         var entityManagerHelper = new EntityManagerHelper(entityManagerFactory);
         servletContext.setAttribute(ContextAttributeNames.ENTITY_MANAGER_HELPER, entityManagerHelper);
 
-        var carService = new CarService(entityManagerHelper);
+        var carRepository = new CarRepository();
+        servletContext.setAttribute(ContextAttributeNames.CAR_REPOSITORY, carRepository);
+
+        var userRepository = new UserRepository();
+        servletContext.setAttribute(ContextAttributeNames.USER_REPOSITORY, userRepository);
+
+        var modelRepository = new ModelRepository();
+        servletContext.setAttribute(ContextAttributeNames.MODEL_REPOSITORY, modelRepository);
+
+        var carService = new CarService(entityManagerHelper, carRepository);
         servletContext.setAttribute(ContextAttributeNames.CAR_SERVICE, carService);
+
+        var modelService = new ModelService(entityManagerHelper, modelRepository);
+        servletContext.setAttribute(ContextAttributeNames.MODEL_SERVICE, modelService);
+
+        var brandService = new BrandService(entityManagerHelper);
+        servletContext.setAttribute(ContextAttributeNames.BRAND_SERVICE, brandService);
+
+        var encodingService = new EncodingService();
+        servletContext.setAttribute(ContextAttributeNames.ENCODING_SERVICE, encodingService);
+
+        var userService = new UserService(encodingService, carRepository, userRepository, entityManagerHelper);
+        servletContext.setAttribute(ContextAttributeNames.USER_SERVICE, userService);
 
         var dataSource = getDataSource(entityManagerFactory);
         var migrationService = new MigrationService(dataSource);

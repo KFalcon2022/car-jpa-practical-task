@@ -2,13 +2,19 @@ package com.walking.carpractice.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Car {
@@ -27,6 +33,16 @@ public class Car {
 
     @Column(name = "actual_technical_inspection", nullable = false)
     private boolean actualTechnicalInspection;
+
+    @ManyToMany(mappedBy = "cars", fetch = FetchType.EAGER)
+    private List<User> owners = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "fk_model")
+    private Model model;
+
+    @Column(name = "fk_model", nullable = false, updatable = false, insertable = false)
+    private Long modelId;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime created;
@@ -83,6 +99,27 @@ public class Car {
 
     public void setActualTechnicalInspection(boolean actualTechnicalInspection) {
         this.actualTechnicalInspection = actualTechnicalInspection;
+    }
+
+    public List<User> getOwners() {
+        return owners;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+        this.modelId = model == null ? null : model.getId();
+    }
+
+    public Long getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(Long modelId) {
+        this.modelId = modelId;
     }
 
     public LocalDateTime getCreated() {

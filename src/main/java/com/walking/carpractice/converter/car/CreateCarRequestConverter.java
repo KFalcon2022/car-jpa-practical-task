@@ -1,7 +1,8 @@
-package com.walking.carpractice.converter;
+package com.walking.carpractice.converter.car;
 
+import com.walking.carpractice.converter.AbstractConverter;
 import com.walking.carpractice.domain.Car;
-import com.walking.carpractice.model.request.CreateCarRequest;
+import com.walking.carpractice.model.car.request.CreateCarRequest;
 
 public class CreateCarRequestConverter extends AbstractConverter<CreateCarRequest, Car> {
     @Override
@@ -12,6 +13,7 @@ public class CreateCarRequestConverter extends AbstractConverter<CreateCarReques
         car.setYear(source.getYear());
         car.setColor(source.getColor());
         car.setActualTechnicalInspection(source.isActualTechnicalInspection());
+        car.setModelId(source.getModelId());
 
         return car;
     }

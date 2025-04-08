@@ -1,11 +1,11 @@
 package com.walking.carpractice.servlet;
 
 import com.walking.carpractice.constant.ContextAttributeNames;
-import com.walking.carpractice.converter.CarConverter;
-import com.walking.carpractice.converter.CreateCarRequestConverter;
-import com.walking.carpractice.converter.UpdateCarRequestConverter;
-import com.walking.carpractice.model.request.CreateCarRequest;
-import com.walking.carpractice.model.request.UpdateCarRequest;
+import com.walking.carpractice.converter.car.CarConverter;
+import com.walking.carpractice.converter.car.CreateCarRequestConverter;
+import com.walking.carpractice.converter.car.UpdateCarRequestConverter;
+import com.walking.carpractice.model.car.request.CreateCarRequest;
+import com.walking.carpractice.model.car.request.UpdateCarRequest;
 import com.walking.carpractice.service.CarService;
 import com.walking.carpractice.servlet.filter.RequestJsonDeserializerFilter;
 import com.walking.carpractice.servlet.filter.ResponseJsonSerializerFilter;
@@ -61,8 +61,8 @@ public class CarServlet extends HttpServlet {
         var carRequest = (UpdateCarRequest) request.getAttribute(RequestJsonDeserializerFilter.POJO_REQUEST_BODY);
         var car = updateCarRequestConverter.convert(carRequest);
 
-        var createdCar = carService.update(car);
-        var carDto = carConverter.convert(createdCar);
+        var updatedCar = carService.update(car);
+        var carDto = carConverter.convert(updatedCar);
 
         request.setAttribute(ResponseJsonSerializerFilter.POJO_RESPONSE_BODY, carDto);
     }
