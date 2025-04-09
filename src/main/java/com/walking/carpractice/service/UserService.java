@@ -26,7 +26,7 @@ public class UserService {
     }
 
     public User getById(Long id) {
-        return entityManagerHelper.runTransactional(em -> em.find(User.class, id));
+        return entityManagerHelper.runTransactional(em -> userRepository.findById(id, em));
     }
 
     public User auth(String username, String password) {
@@ -58,7 +58,7 @@ public class UserService {
 
     public User update(User updated, List<Long> carIds) {
         return entityManagerHelper.runTransactional(em -> {
-            var old = em.find(User.class, updated.getId());
+            var old = userRepository.findById(updated.getId(), em);
 
             old.setFirstName(updated.getFirstName());
             old.setLastName(updated.getLastName());

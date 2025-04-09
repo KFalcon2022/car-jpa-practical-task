@@ -3,7 +3,7 @@ package com.walking.carpractice.servlet;
 import com.walking.carpractice.constant.ContextAttributeNames;
 import com.walking.carpractice.converter.user.UpdateUserRequestConverter;
 import com.walking.carpractice.converter.user.UserConverter;
-import com.walking.carpractice.model.user.request.UpdateUserRequest;
+import com.walking.carpractice.model.dto.user.request.UpdateUserRequest;
 import com.walking.carpractice.service.UserService;
 import com.walking.carpractice.servlet.filter.RequestJsonDeserializerFilter;
 import com.walking.carpractice.servlet.filter.ResponseJsonSerializerFilter;

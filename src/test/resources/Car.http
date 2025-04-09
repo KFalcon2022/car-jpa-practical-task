@@ -41,3 +41,6 @@ DELETE http://localhost:8080/car/car?id=8
 
 ### Получения всех автомобилей текущего пользователя
 GET http://localhost:8080/car/car/search
+
+### Сбросить техосмотр для всех машин старше указанного года
+PUT http://localhost:8080/car/technical-inspection?year=2016

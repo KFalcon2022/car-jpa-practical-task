@@ -16,7 +16,7 @@ public class CarService {
     }
 
     public Car getById(Long id) {
-        return entityManagerHelper.runTransactional(em -> em.find(Car.class, id));
+        return entityManagerHelper.runTransactional(em -> carRepository.findById(id, em));
     }
 
     public List<Car> getAllByUser(Long userId) {
@@ -36,7 +36,7 @@ public class CarService {
 
     public Car update(Car updated) {
         return entityManagerHelper.runTransactional(em -> {
-            var old = em.find(Car.class, updated.getId());
+            var old = carRepository.findById(updated.getId(), em);
 
             old.setColor(updated.getColor());
             old.setNumber(updated.getNumber());
@@ -51,5 +51,10 @@ public class CarService {
             var car = em.find(Car.class, id);
             em.remove(car);
         });
+    }
+
+    public void resetTechnicalInspectionByYear(int year) {
+        entityManagerHelper.runTransactionalNoResult(em ->
+                carRepository.updateSetTechnicalInspectionFalseByYearLessThan(year, em));
     }
 }
