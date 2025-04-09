@@ -4,8 +4,6 @@ import com.walking.carpractice.domain.Car;
 import com.walking.carpractice.domain.Model;
 import com.walking.carpractice.repository.CarRepository;
 
-import java.util.List;
-
 public class CarService {
     private final EntityManagerHelper entityManagerHelper;
     private final CarRepository carRepository;
@@ -17,10 +15,6 @@ public class CarService {
 
     public Car getById(Long id) {
         return entityManagerHelper.runTransactional(em -> carRepository.findById(id, em));
-    }
-
-    public List<Car> getAllByUser(Long userId) {
-        return entityManagerHelper.runTransactional(em -> carRepository.findAllByUserId(userId, em));
     }
 
     public Car create(Car car) {

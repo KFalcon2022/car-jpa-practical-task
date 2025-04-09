@@ -16,6 +16,7 @@ public class ContextAttributeNames {
     public static final String UPDATE_USER_REQUEST_CONVERTER = "updateUserRequestConverter";
 
     public static final String CAR_SERVICE = "carService";
+    public static final String CAR_SEARCH_SERVICE = "carSearchService";
     public static final String USER_SERVICE = "userService";
     public static final String MODEL_SERVICE = "modelService";
     public static final String BRAND_SERVICE = "brandService";

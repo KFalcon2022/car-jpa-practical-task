@@ -28,8 +28,20 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql:42.7.2'
 
     compileOnly 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+
+    compileOnly 'org.hibernate:hibernate-jpamodelgen:6.6.2.Final'
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:6.6.2.Final'
 }
 
-test {
-    useJUnitPlatform()
+tasks.withType(JavaCompile)
+        .configureEach {
+            options.getGeneratedSourceOutputDirectory().set(file("src/generated/java"))
+        }
+
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['src/generated/java']
+        }
+    }
 }

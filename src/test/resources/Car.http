@@ -39,8 +39,8 @@ Content-Type: application/json
 ### Удалить машину по id
 DELETE http://localhost:8080/car/car?id=8
 
-### Получения всех автомобилей текущего пользователя
-GET http://localhost:8080/car/car/search
-
 ### Сбросить техосмотр для всех машин старше указанного года
 PUT http://localhost:8080/car/technical-inspection?year=2016
+
+### Получения автомобилей по фильтру с пагинацией
+GET http://localhost:8080/car/car/search?userId=1&brandIds=1&numberQuery=R-11&pageSize=10&pageNumber=0

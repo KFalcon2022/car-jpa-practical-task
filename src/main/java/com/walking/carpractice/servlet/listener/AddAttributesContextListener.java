@@ -20,6 +20,7 @@ import com.walking.carpractice.repository.CarRepository;
 import com.walking.carpractice.repository.ModelRepository;
 import com.walking.carpractice.repository.UserRepository;
 import com.walking.carpractice.service.BrandService;
+import com.walking.carpractice.service.CarSearchService;
 import com.walking.carpractice.service.CarService;
 import com.walking.carpractice.service.EncodingService;
 import com.walking.carpractice.service.EntityManagerHelper;
@@ -103,6 +104,9 @@ public class AddAttributesContextListener implements ServletContextListener {
 
         var carService = new CarService(entityManagerHelper, carRepository);
         servletContext.setAttribute(ContextAttributeNames.CAR_SERVICE, carService);
+
+        var carSearchService = new CarSearchService(entityManagerHelper, carRepository);
+        servletContext.setAttribute(ContextAttributeNames.CAR_SEARCH_SERVICE, carSearchService);
 
         var modelService = new ModelService(entityManagerHelper, modelRepository);
         servletContext.setAttribute(ContextAttributeNames.MODEL_SERVICE, modelService);
