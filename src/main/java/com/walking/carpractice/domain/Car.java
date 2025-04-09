@@ -36,7 +36,7 @@ public class Car {
     @ManyToMany(mappedBy = "cars")
     private List<User> owners = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_model")
     private Model model;
 
