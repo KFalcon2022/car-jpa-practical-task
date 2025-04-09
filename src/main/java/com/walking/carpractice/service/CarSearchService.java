@@ -41,7 +41,6 @@ public class CarSearchService {
         var builder = em.getCriteriaBuilder();
         var query = builder.createQuery(Car.class);
         var root = query.from(Car.class);
-        root.fetch(Car_.owners);
 
         var predicates = new ArrayList<Predicate>();
 

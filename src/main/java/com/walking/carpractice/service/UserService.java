@@ -2,12 +2,15 @@ package com.walking.carpractice.service;
 
 import com.walking.carpractice.domain.Car;
 import com.walking.carpractice.domain.User;
+import com.walking.carpractice.domain.User_;
 import com.walking.carpractice.exception.AuthException;
 import com.walking.carpractice.exception.DuplicateUserException;
 import com.walking.carpractice.repository.CarRepository;
 import com.walking.carpractice.repository.UserRepository;
+import org.hibernate.jpa.SpecHints;
 
 import java.util.List;
+import java.util.Map;
 
 public class UserService {
     private final EncodingService encodingService;
@@ -26,7 +29,12 @@ public class UserService {
     }
 
     public User getById(Long id) {
-        return entityManagerHelper.runTransactional(em -> userRepository.findById(id, em));
+        return entityManagerHelper.runTransactional(em -> {
+            var entityGraph = em.getEntityGraph(User_.GRAPH_USER_WITH_CARS);
+            Map<String, Object> properties = Map.of(SpecHints.HINT_SPEC_LOAD_GRAPH, entityGraph);
+
+            return em.find(User.class, id, properties);
+        });
     }
 
     public User auth(String username, String password) {
@@ -58,7 +66,10 @@ public class UserService {
 
     public User update(User updated, List<Long> carIds) {
         return entityManagerHelper.runTransactional(em -> {
-            var old = userRepository.findById(updated.getId(), em);
+            var entityGraph = em.getEntityGraph(User_.GRAPH_USER_WITH_CARS);
+            Map<String, Object> properties = Map.of(SpecHints.HINT_SPEC_LOAD_GRAPH, entityGraph);
+
+            var old = em.find(User.class, updated.getId(), properties);
 
             old.setFirstName(updated.getFirstName());
             old.setLastName(updated.getLastName());

@@ -16,6 +16,7 @@ public abstract class Car_ {
 	public static final String YEAR = "year";
 	public static final String ACTUAL_TECHNICAL_INSPECTION = "actualTechnicalInspection";
 	public static final String MODEL_ID = "modelId";
+	public static final String GRAPH_CAR_WITH_OWNERS = "car-with-owners";
 	public static final String CREATED = "created";
 	public static final String OWNERS = "owners";
 	public static final String MODEL = "model";

@@ -1,8 +1,12 @@
 package com.walking.carpractice.service;
 
 import com.walking.carpractice.domain.Car;
+import com.walking.carpractice.domain.Car_;
 import com.walking.carpractice.domain.Model;
 import com.walking.carpractice.repository.CarRepository;
+import org.hibernate.jpa.SpecHints;
+
+import java.util.Map;
 
 public class CarService {
     private final EntityManagerHelper entityManagerHelper;
@@ -14,7 +18,12 @@ public class CarService {
     }
 
     public Car getById(Long id) {
-        return entityManagerHelper.runTransactional(em -> carRepository.findById(id, em));
+        return entityManagerHelper.runTransactional(em -> {
+            var entityGraph = em.getEntityGraph(Car_.GRAPH_CAR_WITH_OWNERS);
+            Map<String, Object> properties = Map.of(SpecHints.HINT_SPEC_LOAD_GRAPH, entityGraph);
+
+            return em.find(Car.class, id, properties);
+        });
     }
 
     public Car create(Car car) {
@@ -30,7 +39,10 @@ public class CarService {
 
     public Car update(Car updated) {
         return entityManagerHelper.runTransactional(em -> {
-            var old = carRepository.findById(updated.getId(), em);
+            var entityGraph = em.getEntityGraph(Car_.GRAPH_CAR_WITH_OWNERS);
+            Map<String, Object> properties = Map.of(SpecHints.HINT_SPEC_LOAD_GRAPH, entityGraph);
+
+            var old = em.find(Car.class, updated.getId(), properties);
 
             old.setColor(updated.getColor());
             old.setNumber(updated.getNumber());

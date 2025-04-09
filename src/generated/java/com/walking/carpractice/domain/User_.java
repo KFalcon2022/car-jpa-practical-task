@@ -15,6 +15,7 @@ public abstract class User_ {
 	public static final String LAST_NAME = "lastName";
 	public static final String CARS = "cars";
 	public static final String PASSWORD = "password";
+	public static final String GRAPH_USER_WITH_CARS = "user-with-cars";
 	public static final String CREATED = "created";
 	public static final String ID = "id";
 	public static final String UPDATED = "updated";
